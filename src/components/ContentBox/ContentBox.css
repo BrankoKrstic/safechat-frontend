@@ -1,0 +1,4 @@
+.ContentBox {
+	border-radius: 1rem;
+	background: radial-gradient(circle, #232b5c 0%, #13162f 100%);
+}
