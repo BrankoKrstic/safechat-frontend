@@ -1,0 +1,19 @@
+.ChatMessage {
+	text-align: right;
+	margin: 1rem;
+	height: 4rem;
+}
+
+.ChatMessage-sender {
+	color: #999;
+	font-size: 0.8rem;
+	padding-right: 0.5rem;
+}
+
+.ChatMessage-message {
+	line-height: 1.2rem;
+	font-size: 1.2rem;
+	background-color: rgba(255, 255, 255, 0.2);
+	padding: 1.2rem 1rem 1.2rem 3rem;
+	border-radius: 1rem;
+}
