@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Login from "../Login/Login";
+import ChatMain from "../ChatMain/ChatMain";
 import { useDispatch } from "react-redux";
 import * as actionTypes from "../../store/actions/actionTypes";
 import { Switch, Route, Redirect } from "react-router-dom";
@@ -25,7 +26,7 @@ export default function SafeChat() {
 					<Login />
 				</Route>
 				<Route path="/main">
-					<div>Main Chat</div>
+					<ChatMain />
 				</Route>
 				<Route path="/">
 					<Redirect to="/login" />
