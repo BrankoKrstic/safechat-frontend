@@ -1,4 +1,6 @@
 import ContentBox from "../../components/ContentBox/ContentBox";
+import MessageForm from "./MessageForm/MessageForm";
+import ChatBox from "./ChatBox/ChatBox";
 import "./ChatMain.css";
 
 export default function ChatMain() {
@@ -13,8 +15,8 @@ export default function ChatMain() {
 			<div className="ChatMain-chat">
 				<ContentBox>
 					<div className="ChatMain-right">
-						<div className="ChatBox"></div>
-						<div className="MessageForm"></div>
+						<ChatBox />
+						<MessageForm />
 					</div>
 				</ContentBox>
 			</div>

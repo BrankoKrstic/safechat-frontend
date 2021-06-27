@@ -7,6 +7,7 @@ export default function FormInput(props) {
 			className="FormInput"
 			id={inputId}
 			value={value}
+			placeholder={props.placeholder}
 			onChange={(e) => onChange(e.target.value)}
 		></input>
 	);
