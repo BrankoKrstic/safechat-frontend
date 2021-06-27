@@ -9,13 +9,13 @@ import "./SafeChat.css";
 export default function SafeChat() {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		const id = window.localStorage.getItem("safechat-userId");
-		const username = window.localStorage.getItem("safechat-username");
-		if (id) {
+		const loginData = window.localStorage.getItem("safechat-loginInfo");
+		if (loginData) {
+			const { username, userId } = JSON.parse(loginData);
 			dispatch({
 				type: actionTypes.LOGIN,
-				username: username,
-				userId: id,
+				username,
+				userId,
 			});
 		}
 	}, []);

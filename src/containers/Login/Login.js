@@ -17,10 +17,12 @@ export default function Login() {
 		if (usernameState.length === 0) return;
 		const username = usernameState;
 		setUsernameState("");
-		const id = uuid();
-		window.localStorage.setItem("safechat-username", username);
-		window.localStorage.setItem("safechat-userId", id);
-		dispatch({ type: actionTypes.LOGIN, username, userId: id });
+		const userId = uuid();
+		window.localStorage.setItem(
+			"safechat-loginInfo",
+			JSON.stringify({ username: username, userId: userId })
+		);
+		dispatch({ type: actionTypes.LOGIN, username, userId });
 	};
 	return (
 		<>
