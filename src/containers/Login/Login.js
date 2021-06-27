@@ -22,29 +22,30 @@ export default function Login() {
 		window.localStorage.setItem("safechat-userId", id);
 		dispatch({ type: actionTypes.LOGIN, username, userId: id });
 	};
-	let loginPage = (
-		<div className="Login">
-			<ContentBox>
-				<div className="LoginContent">
-					<form className="Login-form" onSubmit={handleSubmit}>
-						<label htmlFor="usernameinput" className="Login-label">
-							Enter Your Username
-						</label>
-						<FormInput
-							inputId="usernameinput"
-							className="Login-input"
-							value={usernameState}
-							onChange={setUsernameState}
-						></FormInput>
-						<FormButton text="LOG IN" />
-					</form>
-				</div>
-			</ContentBox>
-		</div>
+	return (
+		<>
+			{userId !== null && <Redirect to="/main" />}
+			<div className="Login">
+				<ContentBox>
+					<div className="LoginContent">
+						<form className="Login-form" onSubmit={handleSubmit}>
+							<label
+								htmlFor="usernameinput"
+								className="Login-label"
+							>
+								Enter Your Username
+							</label>
+							<FormInput
+								inputId="usernameinput"
+								className="Login-input"
+								value={usernameState}
+								onChange={setUsernameState}
+							></FormInput>
+							<FormButton text="LOG IN" />
+						</form>
+					</div>
+				</ContentBox>
+			</div>
+		</>
 	);
-	if (userId !== null) {
-		loginPage = <Redirect to="/main" />;
-	}
-
-	return loginPage;
 }

@@ -1,25 +1,31 @@
+import { Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 import ContentBox from "../../components/ContentBox/ContentBox";
 import MessageForm from "./MessageForm/MessageForm";
 import ChatBox from "./ChatBox/ChatBox";
 import "./ChatMain.css";
 
 export default function ChatMain() {
+	const userId = useSelector((state) => state.userId);
 	return (
-		<div className="ChatMain">
-			<div className="ChatMain-sidebar">
-				<ContentBox>
-					<div className="Sidebar-header">Participants</div>
-					<div className="Sidebar-main"></div>
-				</ContentBox>
+		<>
+			{userId === null && <Redirect to="/login" />}
+			<div className="ChatMain">
+				<div className="ChatMain-sidebar">
+					<ContentBox>
+						<div className="Sidebar-header">Participants</div>
+						<div className="Sidebar-main"></div>
+					</ContentBox>
+				</div>
+				<div className="ChatMain-chat">
+					<ContentBox>
+						<div className="ChatMain-right">
+							<ChatBox />
+							<MessageForm />
+						</div>
+					</ContentBox>
+				</div>
 			</div>
-			<div className="ChatMain-chat">
-				<ContentBox>
-					<div className="ChatMain-right">
-						<ChatBox />
-						<MessageForm />
-					</div>
-				</ContentBox>
-			</div>
-		</div>
+		</>
 	);
 }
