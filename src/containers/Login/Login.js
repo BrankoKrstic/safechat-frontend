@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Redirect } from "react-router-dom";
+import * as actionTypes from "../../store/actions/actionTypes";
 import { v4 as uuid } from "uuid";
 import ContentBox from "../../components/ContentBox/ContentBox";
 import FormInput from "../../components/FormInput/FormInput";
@@ -7,15 +10,17 @@ import "./Login.css";
 
 export default function Login() {
 	const [usernameState, setUsernameState] = useState("");
+	const dispatch = useDispatch();
+	const userId = useSelector((state) => state.userId);
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (usernameState.length === 0) return;
 		const username = usernameState;
 		setUsernameState("");
-		const userId = uuid();
-		console.log({ username, userId });
+		const id = uuid();
+		dispatch({ type: actionTypes.LOGIN, username, userId: id });
 	};
-	return (
+	let loginPage = (
 		<div className="Login">
 			<ContentBox>
 				<div className="LoginContent">
@@ -35,4 +40,9 @@ export default function Login() {
 			</ContentBox>
 		</div>
 	);
+	if (userId !== null) {
+		loginPage = <Redirect to="/main" />;
+	}
+
+	return loginPage;
 }
