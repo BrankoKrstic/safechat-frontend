@@ -1,10 +1,10 @@
-import "./Input.css";
+import "./FormInput.css";
 
-export default function Input(props) {
+export default function FormInput(props) {
 	const { inputId, value, onChange } = props;
 	return (
 		<input
-			className="Input"
+			className="FormInput"
 			id={inputId}
 			value={value}
 			onChange={(e) => onChange(e.target.value)}

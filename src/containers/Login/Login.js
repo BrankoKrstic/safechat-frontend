@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { uuid } from "uuidv4";
 import ContentBox from "../../components/ContentBox/ContentBox";
-import Input from "../../components/Input/Input";
+import FormInput from "../../components/FormInput/FormInput";
+import FormButton from "../../components/FormButton/FormButton";
 import "./Login.css";
 
 export default function Login() {
@@ -10,20 +11,23 @@ export default function Login() {
 		e.preventDefault();
 	};
 	return (
-		<ContentBox height="100%" width="100%">
-			<div className="Login">
-				<form className="Login-form" onSubmit={handleSubmit}>
-					<label for="usernameinput" className="Login-label">
-						Enter Your Username
-					</label>
-					<Input
-						inputId="usernameinput"
-						className="Login-input"
-						value={usernameState}
-						onChange={setUsernameState}
-					></Input>
-				</form>
-			</div>
-		</ContentBox>
+		<div className="Login">
+			<ContentBox>
+				<div className="LoginContent">
+					<form className="Login-form" onSubmit={handleSubmit}>
+						<label for="usernameinput" className="Login-label">
+							Enter Your Username
+						</label>
+						<FormInput
+							inputId="usernameinput"
+							className="Login-input"
+							value={usernameState}
+							onChange={setUsernameState}
+						></FormInput>
+						<FormButton text="LOG IN" />
+					</form>
+				</div>
+			</ContentBox>
+		</div>
 	);
 }
