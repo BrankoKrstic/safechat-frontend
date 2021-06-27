@@ -18,6 +18,8 @@ export default function Login() {
 		const username = usernameState;
 		setUsernameState("");
 		const id = uuid();
+		window.localStorage.setItem("safechat-username", username);
+		window.localStorage.setItem("safechat-userId", id);
 		dispatch({ type: actionTypes.LOGIN, username, userId: id });
 	};
 	let loginPage = (
