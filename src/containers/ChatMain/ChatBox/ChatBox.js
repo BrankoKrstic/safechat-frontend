@@ -3,12 +3,16 @@ import { useSelector } from "react-redux";
 import "./ChatBox.css";
 
 export default function ChatBox() {
-	const { messages } = useSelector((state) => state.message);
+	const { messages } = useSelector((state) => state.chat);
 	return (
 		<div className="ChatBox">
 			<div className="ChatBox-messagecontainer">
-				{messages.map((msg) => (
-					<ChatMessage from={msg.username} message={msg.message} />
+				{messages.map((msg, i) => (
+					<ChatMessage
+						key={i}
+						from={msg.username}
+						message={msg.message}
+					/>
 				))}
 			</div>
 		</div>

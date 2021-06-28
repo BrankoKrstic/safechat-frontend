@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import loginReducer from "./store/reducers/login";
-import messageReducer from "./store/reducers/message";
+import chatReducer from "./store/reducers/chat";
 import { createStore, compose, combineReducers } from "redux";
 import { Provider } from "react-redux";
 
@@ -12,7 +12,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
 	login: loginReducer,
-	message: messageReducer,
+	chat: chatReducer,
 });
 
 const store = createStore(rootReducer, composeEnhancers());

@@ -2,7 +2,7 @@ import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
-import { getMessage } from "../../store/actions/message";
+import { getMessage } from "../../store/actions/chat";
 import ContentBox from "../../components/ContentBox/ContentBox";
 import MessageForm from "./MessageForm/MessageForm";
 import ChatBox from "./ChatBox/ChatBox";
@@ -14,17 +14,27 @@ export default function ChatMain() {
 	const socket = io("http://localhost:8080/", {
 		query: { id: userId },
 	});
-	socket.on("message", (message) => {
-		console.log("message");
-	});
+
+	const sendMessage = (message) => {
+		if (message === "") return;
+		socket.emit("send-message", { username, userId, message });
+		dispatch(getMessage(username, userId, message));
+	};
+
 	useEffect(() => {
 		socket.connect();
+		socket.on("message", (messageData) => {
+			dispatch(
+				getMessage(
+					messageData.username,
+					messageData.userId,
+					messageData.message
+				)
+			);
+		});
 		return () => socket.close();
-	}, [socket]);
-	const sendMessage = (message) => {
-		dispatch(getMessage(username, userId, message));
-		socket.emit("send-message", { message });
-	};
+	}, [socket, userId]);
+
 	return (
 		<>
 			{userId === null && <Redirect to="/login" />}

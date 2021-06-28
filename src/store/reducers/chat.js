@@ -8,6 +8,7 @@ const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.GET_MESSAGE:
 			return {
+				...state,
 				messages: [
 					...state.messages,
 					{
