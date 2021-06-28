@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
-import * as actionTypes from "../../store/actions/actionTypes";
+import { login } from "../../store/actions/login";
 import { v4 as uuid } from "uuid";
 import ContentBox from "../../components/ContentBox/ContentBox";
 import FormInput from "../../components/FormInput/FormInput";
@@ -11,7 +11,7 @@ import "./Login.css";
 export default function Login() {
 	const [usernameState, setUsernameState] = useState("");
 	const dispatch = useDispatch();
-	const userId = useSelector((state) => state.userId);
+	const id = useSelector((state) => state.login.userId);
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (usernameState.length === 0) return;
@@ -22,11 +22,11 @@ export default function Login() {
 			"safechat-loginInfo",
 			JSON.stringify({ username: username, userId: userId })
 		);
-		dispatch({ type: actionTypes.LOGIN, username, userId });
+		dispatch(login(username, userId));
 	};
 	return (
 		<>
-			{userId !== null && <Redirect to="/main" />}
+			{id !== null && <Redirect to="/main" />}
 			<div className="Login">
 				<ContentBox>
 					<div className="LoginContent">

@@ -1,14 +1,16 @@
 import { Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
+import { getMessage } from "../../store/actions/message";
 import ContentBox from "../../components/ContentBox/ContentBox";
 import MessageForm from "./MessageForm/MessageForm";
 import ChatBox from "./ChatBox/ChatBox";
 import "./ChatMain.css";
 
 export default function ChatMain() {
-	const { username, userId } = useSelector((state) => state);
+	const { username, userId } = useSelector((state) => state.login);
+	const dispatch = useDispatch();
 	const socket = io("http://localhost:8080/", {
 		query: { id: userId },
 	});
@@ -20,6 +22,7 @@ export default function ChatMain() {
 		return () => socket.close();
 	}, [socket]);
 	const sendMessage = (message) => {
+		dispatch(getMessage(username, userId, message));
 		socket.emit("send-message", { message });
 	};
 	return (

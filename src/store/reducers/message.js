@@ -6,12 +6,20 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
-		case actionTypes.SEND_MESSAGE:
+		case actionTypes.GET_MESSAGE:
 			return {
-				username: action.username,
-				userId: action.userId,
+				messages: [
+					...state.messages,
+					{
+						username: action.username,
+						userId: action.userId,
+						message: action.message,
+					},
+				],
 			};
 		default:
 			return state;
 	}
 };
+
+export default reducer;
