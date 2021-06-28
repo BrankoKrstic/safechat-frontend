@@ -9,12 +9,19 @@ import "./ChatMain.css";
 
 export default function ChatMain() {
 	const { username, userId } = useSelector((state) => state);
-	useEffect(() => {
-		const socket = io("http://localhost:8080/");
-		socket.on("message", (message) => {
-			console.log("message");
-		});
+	const socket = io("http://localhost:8080/", {
+		query: { id: userId },
 	});
+	socket.on("message", (message) => {
+		console.log("message");
+	});
+	useEffect(() => {
+		socket.connect();
+		return () => socket.close();
+	}, [socket]);
+	const sendMessage = (message) => {
+		socket.emit("send-message", { message });
+	};
 	return (
 		<>
 			{userId === null && <Redirect to="/login" />}
@@ -29,7 +36,7 @@ export default function ChatMain() {
 					<ContentBox>
 						<div className="ChatMain-right">
 							<ChatBox />
-							<MessageForm />
+							<MessageForm sendMessage={sendMessage} />
 						</div>
 					</ContentBox>
 				</div>
