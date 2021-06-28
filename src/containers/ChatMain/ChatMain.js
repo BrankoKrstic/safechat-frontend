@@ -1,12 +1,20 @@
 import { Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { io } from "socket.io-client";
 import ContentBox from "../../components/ContentBox/ContentBox";
 import MessageForm from "./MessageForm/MessageForm";
 import ChatBox from "./ChatBox/ChatBox";
 import "./ChatMain.css";
 
 export default function ChatMain() {
-	const userId = useSelector((state) => state.userId);
+	const { username, userId } = useSelector((state) => state);
+	useEffect(() => {
+		const socket = io("http://localhost:8080/");
+		socket.on("message", (message) => {
+			console.log("message");
+		});
+	});
 	return (
 		<>
 			{userId === null && <Redirect to="/login" />}
