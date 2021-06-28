@@ -8,3 +8,11 @@ export const getMessage = (username, userId, message) => {
 		userId,
 	};
 };
+
+export const joinUser = (username, userId) => {
+	return {
+		type: actionTypes.JOIN_USER,
+		username,
+		userId,
+	};
+};
