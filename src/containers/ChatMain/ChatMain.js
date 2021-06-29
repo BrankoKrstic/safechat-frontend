@@ -13,7 +13,7 @@ export default function ChatMain() {
 	const { username, userId } = useSelector((state) => state.login);
 	const { messages } = useSelector((state) => state.chat);
 	const dispatch = useDispatch();
-	const socket = io("http://localhost:8080/", {
+	const socket = io(process.env.REACT_APP_FRONTEND_ENDPOINT, {
 		query: { userId, username },
 	});
 
@@ -27,7 +27,6 @@ export default function ChatMain() {
 			window.sessionStorage.getItem("safechat-messages")
 		);
 		if (messageData && messageData.messages.length > 0) {
-			console.log(messageData);
 			dispatch(setMessages(messageData.messages));
 		}
 		socket.connect();
