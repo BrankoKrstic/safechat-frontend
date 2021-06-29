@@ -1,6 +1,6 @@
 .UserWidget {
 	font-weight: bold;
-	padding: 1rem 2rem;
+	padding: 1rem 0.5rem;
 	text-align: left;
 	background-color: rgba(255, 255, 255, 0.2);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
@@ -9,4 +9,13 @@
 
 .Even {
 	background-color: rgba(255, 255, 255, 0.1);
+}
+
+.UserWidget-online {
+	width: 0.7rem;
+	height: 0.7rem;
+	background-color: rgb(0, 187, 0);
+	border-radius: 100%;
+	display: inline-block;
+	margin: 0 1rem;
 }
