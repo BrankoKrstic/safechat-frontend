@@ -2,7 +2,7 @@ import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
-import { getMessage, setUsers } from "../../store/actions/chat";
+import { getMessage, setUsers, setMessages } from "../../store/actions/chat";
 import ContentBox from "../../components/ContentBox/ContentBox";
 import MessageForm from "./MessageForm/MessageForm";
 import ChatBox from "./ChatBox/ChatBox";
@@ -11,6 +11,7 @@ import "./ChatMain.css";
 
 export default function ChatMain() {
 	const { username, userId } = useSelector((state) => state.login);
+	const { messages } = useSelector((state) => state.chat);
 	const dispatch = useDispatch();
 	const socket = io("http://localhost:8080/", {
 		query: { userId, username },
@@ -21,24 +22,40 @@ export default function ChatMain() {
 		socket.emit("send-message", { username, userId, message });
 		dispatch(getMessage(username, userId, message));
 	};
-
 	useEffect(() => {
+		const messageData = JSON.parse(
+			window.sessionStorage.getItem("safechat-messages")
+		);
+		if (messageData && messageData.messages.length > 0) {
+			console.log(messageData);
+			dispatch(setMessages(messageData.messages));
+		}
 		socket.connect();
 		socket.on("message", (messageData) => {
-			dispatch(
-				getMessage(
-					messageData.username,
-					messageData.userId,
-					messageData.message
-				)
-			);
+			if (messageData.userId !== userId) {
+				dispatch(
+					getMessage(
+						messageData.username,
+						messageData.userId,
+						messageData.message
+					)
+				);
+			}
 		});
 		socket.on("chat-data", (connectedSockets) => {
 			dispatch(setUsers(connectedSockets));
 		});
-		return () => socket.close();
-	}, [socket]);
 
+		return () => socket.close();
+	}, []);
+	useEffect(() => {
+		if (messages !== []) {
+			window.sessionStorage.setItem(
+				"safechat-messages",
+				JSON.stringify({ messages: messages })
+			);
+		}
+	}, [messages]);
 	return (
 		<>
 			{userId === null && <Redirect to="/login" />}

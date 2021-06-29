@@ -19,6 +19,11 @@ const reducer = (state = initialState, action) => {
 					},
 				],
 			};
+		case actionTypes.SET_MESSAGES:
+			return {
+				...state,
+				messages: [...action.messageData],
+			};
 		case actionTypes.SET_USERS:
 			return {
 				...state,

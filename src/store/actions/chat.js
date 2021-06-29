@@ -15,3 +15,10 @@ export const setUsers = (userdata) => {
 		userdata,
 	};
 };
+
+export const setMessages = (messageData) => {
+	return {
+		type: actionTypes.SET_MESSAGES,
+		messageData,
+	};
+};
