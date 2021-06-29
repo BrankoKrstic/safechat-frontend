@@ -12,24 +12,6 @@
 	flex-direction: column;
 }
 
-.Sidebar-header {
-	width: 100%;
-	line-height: 4rem;
-	font-size: 1.5rem;
-	font-weight: bold;
-	letter-spacing: 2px;
-	height: 4rem;
-	background-color: rgba(255, 255, 255, 0.05);
-	border-bottom: 1px solid white;
-}
-
-.Sidebar-main {
-	height: auto;
-	display: flex;
-	flex-direction: row;
-	overflow: auto;
-}
-
 .ChatMain-chat {
 	width: 79%;
 	height: 100%;

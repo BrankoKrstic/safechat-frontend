@@ -1,7 +1,7 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-	users: [],
+	users: {},
 	messages: [],
 };
 
@@ -22,10 +22,10 @@ const reducer = (state = initialState, action) => {
 		case actionTypes.JOIN_USER:
 			return {
 				...state,
-				users: [
+				users: {
 					...state.users,
-					{ username: action.username, userId: action.userId },
-				],
+					[action.userId]: action.username,
+				},
 			};
 		default:
 			return state;

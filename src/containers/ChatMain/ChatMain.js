@@ -6,6 +6,7 @@ import { getMessage, joinUser } from "../../store/actions/chat";
 import ContentBox from "../../components/ContentBox/ContentBox";
 import MessageForm from "./MessageForm/MessageForm";
 import ChatBox from "./ChatBox/ChatBox";
+import ChatSidebar from "./ChatSidebar/ChatSidebar";
 import "./ChatMain.css";
 
 export default function ChatMain() {
@@ -32,11 +33,13 @@ export default function ChatMain() {
 				)
 			);
 		});
-		socket.on("chat-join", (userData) => {
-			dispatch(joinUser(username, userId));
+		socket.on("chat-join", (name, id) => {
+			if (id !== "null") {
+				dispatch(joinUser(name, id));
+			}
 		});
 		return () => socket.close();
-	}, [socket, userId]);
+	}, [socket]);
 
 	return (
 		<>
@@ -44,8 +47,7 @@ export default function ChatMain() {
 			<div className="ChatMain">
 				<div className="ChatMain-sidebar">
 					<ContentBox>
-						<div className="Sidebar-header">Participants</div>
-						<div className="Sidebar-main"></div>
+						<ChatSidebar />
 					</ContentBox>
 				</div>
 				<div className="ChatMain-chat">
