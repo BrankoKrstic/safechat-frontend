@@ -7,14 +7,15 @@ export default function ChatSidebar() {
 	const users = () => {
 		const userComponents = [];
 		let i = 1;
-		for (let user in userData) {
-			userComponents.push(
-				<UserWidget
-					key={user}
-					isEven={i % 2 === 0}
-					username={userData[user]}
-				/>
-			);
+		for (let id in userData) {
+			if (id !== "null")
+				userComponents.push(
+					<UserWidget
+						key={id}
+						isEven={i % 2 === 0}
+						username={userData[id]}
+					/>
+				);
 			i++;
 		}
 		return userComponents;

@@ -2,7 +2,7 @@ import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
-import { getMessage, joinUser } from "../../store/actions/chat";
+import { getMessage, setUsers } from "../../store/actions/chat";
 import ContentBox from "../../components/ContentBox/ContentBox";
 import MessageForm from "./MessageForm/MessageForm";
 import ChatBox from "./ChatBox/ChatBox";
@@ -33,12 +33,8 @@ export default function ChatMain() {
 				)
 			);
 		});
-		socket.on("chat-join", (connectedSockets) => {
-			for (let socket of connectedSockets) {
-				if (socket.userId !== "null") {
-					dispatch(joinUser(socket.username, socket.userId));
-				}
-			}
+		socket.on("chat-data", (connectedSockets) => {
+			dispatch(setUsers(connectedSockets));
 		});
 		return () => socket.close();
 	}, [socket]);

@@ -9,10 +9,9 @@ export const getMessage = (username, userId, message) => {
 	};
 };
 
-export const joinUser = (username, userId) => {
+export const setUsers = (userdata) => {
 	return {
-		type: actionTypes.JOIN_USER,
-		username,
-		userId,
+		type: actionTypes.SET_USERS,
+		userdata,
 	};
 };

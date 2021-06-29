@@ -19,13 +19,10 @@ const reducer = (state = initialState, action) => {
 					},
 				],
 			};
-		case actionTypes.JOIN_USER:
+		case actionTypes.SET_USERS:
 			return {
 				...state,
-				users: {
-					...state.users,
-					[action.userId]: action.username,
-				},
+				users: { ...action.userdata },
 			};
 		default:
 			return state;
