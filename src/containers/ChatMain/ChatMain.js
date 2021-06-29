@@ -33,9 +33,11 @@ export default function ChatMain() {
 				)
 			);
 		});
-		socket.on("chat-join", (name, id) => {
-			if (id !== "null") {
-				dispatch(joinUser(name, id));
+		socket.on("chat-join", (connectedSockets) => {
+			for (let socket of connectedSockets) {
+				if (socket.userId !== "null") {
+					dispatch(joinUser(socket.username, socket.userId));
+				}
 			}
 		});
 		return () => socket.close();
