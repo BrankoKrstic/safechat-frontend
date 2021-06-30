@@ -13,6 +13,7 @@ import MessageForm from "./MessageForm/MessageForm";
 import ChatBox from "./ChatBox/ChatBox";
 import ChatSidebar from "./ChatSidebar/ChatSidebar";
 import ChatParticipants from "./ChatParticipants/ChatParticipants";
+import ChatRooms from "./ChatRooms/ChatRooms";
 import "./ChatMain.css";
 
 export default function ChatMain() {
@@ -38,6 +39,7 @@ export default function ChatMain() {
 		dispatch(getMessage(username, userId, message, currentRoom));
 	};
 	const setRoom = (room) => {
+		if (room === userId) return;
 		socket.emit("join-room", room, (message) => {
 			dispatch(joinRoom(room));
 			dispatch(getMessage("server", "", message));
@@ -52,15 +54,18 @@ export default function ChatMain() {
 		}
 		socket.connect();
 		socket.on("message", (messageData) => {
-			if (messageData.userId !== userId) {
-				dispatch(
-					getMessage(
-						messageData.username,
-						messageData.userId,
-						messageData.message
-					)
-				);
+			if (messageData.userId === userId) return;
+			if (messageData.room === userId) {
+				messageData.room = messageData.userId;
 			}
+			dispatch(
+				getMessage(
+					messageData.username,
+					messageData.userId,
+					messageData.message,
+					messageData.room
+				)
+			);
 		});
 		socket.on("chat-data", (connectedSockets) => {
 			dispatch(setUsers(connectedSockets));
@@ -83,11 +88,13 @@ export default function ChatMain() {
 				<div className="ChatMain-sidebar">
 					<div className="ChatMain-sidebar-inner">
 						<ChatSidebar headerText="Participants">
-							<ChatParticipants />
+							<ChatParticipants setRoom={setRoom} />
 						</ChatSidebar>
 					</div>
 					<div className="ChatMain-sidebar-inner">
-						<ChatSidebar headerText="Chats"></ChatSidebar>
+						<ChatSidebar headerText="Chats">
+							<ChatRooms setRoom={setRoom} />
+						</ChatSidebar>
 					</div>
 				</div>
 				<div className="ChatMain-chat">

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import "./ChatBox.css";
 
 export default function ChatBox() {
-	const { messages } = useSelector((state) => state.chat);
+	const { messages, currentRoom } = useSelector((state) => state.chat);
 	const scrollDiv = useRef(null);
 	useEffect(() => {
 		scrollDiv.current.scrollIntoView({ behavior: "smooth" });
@@ -12,13 +12,17 @@ export default function ChatBox() {
 	return (
 		<div className="ChatBox">
 			<div className="ChatBox-messagecontainer">
-				{messages.map((msg, i) => (
-					<ChatMessage
-						key={i}
-						from={msg.username}
-						message={msg.message}
-					/>
-				))}
+				{messages.map((msg, i) => {
+					if (msg.room === currentRoom) {
+						return (
+							<ChatMessage
+								key={i}
+								from={msg.username}
+								message={msg.message}
+							/>
+						);
+					}
+				})}
 				<div
 					style={{
 						height: "1px",
