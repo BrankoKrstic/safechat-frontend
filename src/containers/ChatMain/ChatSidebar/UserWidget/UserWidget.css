@@ -1,14 +1,22 @@
 .UserWidget {
 	font-weight: bold;
 	padding: 1rem 0.5rem;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 	text-align: left;
 	background-color: rgba(255, 255, 255, 0.2);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 	cursor: pointer;
+	transition: all ease-in 0.2s;
 }
 
 .Even {
 	background-color: rgba(255, 255, 255, 0.1);
+}
+
+.UserWidget:hover {
+	background-color: rgba(255, 255, 255, 0.3);
 }
 
 .UserWidget-online {
@@ -18,4 +26,13 @@
 	border-radius: 100%;
 	display: inline-block;
 	margin: 0 1rem;
+}
+
+.Current {
+	background-color: rgba(21, 252, 0, 0.1);
+	border-color: rgba(21, 252, 0, 0.4);
+}
+
+.Current:hover {
+	background-color: rgba(21, 252, 0, 0.1);
 }

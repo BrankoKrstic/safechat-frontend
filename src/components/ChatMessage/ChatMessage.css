@@ -5,9 +5,14 @@
 }
 
 .ChatMessage-sender {
-	color: #999;
+	color: #888;
 	font-size: 0.8rem;
 	padding-right: 0.5rem;
+}
+
+.ChatMessage-sender-animated {
+	animation-name: fade-in;
+	animation-duration: 0.5s;
 }
 
 .ChatMessage-message {
@@ -16,4 +21,33 @@
 	background-color: rgba(255, 255, 255, 0.2);
 	padding: 1.2rem 1rem 1.2rem 3rem;
 	border-radius: 1rem;
+}
+
+.ChatMessage-message-animated {
+	animation-name: slide-in;
+	animation-duration: 0.5s;
+}
+
+@keyframes slide-in {
+	0% {
+		transform: translateX(-4rem);
+	}
+	75% {
+		transform: translateX(1rem);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }

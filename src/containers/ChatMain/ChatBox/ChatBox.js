@@ -5,6 +5,7 @@ import "./ChatBox.css";
 
 export default function ChatBox() {
 	const { messages, currentRoom } = useSelector((state) => state.chat);
+	const currentMessages = messages.filter((msg) => msg.room === currentRoom);
 	const scrollDiv = useRef(null);
 	useEffect(() => {
 		scrollDiv.current.scrollIntoView({ behavior: "smooth" });
@@ -12,16 +13,15 @@ export default function ChatBox() {
 	return (
 		<div className="ChatBox">
 			<div className="ChatBox-messagecontainer">
-				{messages.map((msg, i) => {
-					if (msg.room === currentRoom) {
-						return (
-							<ChatMessage
-								key={i}
-								from={msg.username}
-								message={msg.message}
-							/>
-						);
-					}
+				{currentMessages.map((msg, i) => {
+					return (
+						<ChatMessage
+							key={i}
+							from={msg.username}
+							message={msg.message}
+							isAnimated={i === currentMessages.length - 1}
+						/>
+					);
 				})}
 				<div
 					style={{
