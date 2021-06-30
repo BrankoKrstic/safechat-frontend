@@ -2,7 +2,12 @@ import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
-import { getMessage, setUsers, setMessages } from "../../store/actions/chat";
+import {
+	getMessage,
+	setUsers,
+	setMessages,
+	joinRoom,
+} from "../../store/actions/chat";
 import ContentBox from "../../components/ContentBox/ContentBox";
 import MessageForm from "./MessageForm/MessageForm";
 import ChatBox from "./ChatBox/ChatBox";
@@ -12,7 +17,7 @@ import "./ChatMain.css";
 
 export default function ChatMain() {
 	const { username, userId } = useSelector((state) => state.login);
-	const { messages } = useSelector((state) => state.chat);
+	const { messages, currentRoom } = useSelector((state) => state.chat);
 	const dispatch = useDispatch();
 	const socket = io(process.env.REACT_APP_FRONTEND_ENDPOINT, {
 		query: { userId, username },
@@ -20,8 +25,23 @@ export default function ChatMain() {
 
 	const sendMessage = (message) => {
 		if (message === "") return;
-		socket.emit("send-message", { username, userId, message });
-		dispatch(getMessage(username, userId, message));
+		socket.emit(
+			"send-message",
+			{
+				username,
+				userId,
+				message,
+				room: currentRoom,
+			},
+			currentRoom
+		);
+		dispatch(getMessage(username, userId, message, currentRoom));
+	};
+	const setRoom = (room) => {
+		socket.emit("join-room", room, (message) => {
+			dispatch(joinRoom(room));
+			dispatch(getMessage("server", "", message));
+		});
 	};
 	useEffect(() => {
 		const messageData = JSON.parse(
@@ -67,7 +87,7 @@ export default function ChatMain() {
 						</ChatSidebar>
 					</div>
 					<div className="ChatMain-sidebar-inner">
-						<ChatSidebar headerText="Rooms"></ChatSidebar>
+						<ChatSidebar headerText="Chats"></ChatSidebar>
 					</div>
 				</div>
 				<div className="ChatMain-chat">

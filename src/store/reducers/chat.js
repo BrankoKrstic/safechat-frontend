@@ -3,6 +3,7 @@ import * as actionTypes from "../actions/actionTypes";
 const initialState = {
 	users: {},
 	rooms: [],
+	currentRoom: "",
 	messages: [],
 };
 
@@ -17,6 +18,7 @@ const reducer = (state = initialState, action) => {
 						username: action.username,
 						userId: action.userId,
 						message: action.message,
+						room: action.room,
 					},
 				],
 			};
@@ -33,7 +35,12 @@ const reducer = (state = initialState, action) => {
 		case actionTypes.JOIN_ROOM:
 			return {
 				...state,
-				rooms: [...state.rooms, action.newRoom],
+				currentRoom: action.room,
+			};
+		case actionTypes.ADD_ROOM:
+			return {
+				...state,
+				rooms: [...state.rooms, action.room],
 			};
 		case actionTypes.SET_ROOMS:
 			return {

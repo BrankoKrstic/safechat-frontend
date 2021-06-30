@@ -1,11 +1,12 @@
 import * as actionTypes from "./actionTypes";
 
-export const getMessage = (username, userId, message) => {
+export const getMessage = (username, userId, message, room) => {
 	return {
 		type: actionTypes.GET_MESSAGE,
 		message,
 		username,
 		userId,
+		room,
 	};
 };
 
@@ -26,6 +27,13 @@ export const setMessages = (messageData) => {
 export const joinRoom = (room) => {
 	return {
 		type: actionTypes.JOIN_ROOM,
+		room,
+	};
+};
+
+export const addRoom = (room) => {
+	return {
+		type: actionTypes.ADD_ROOM,
 		room,
 	};
 };
