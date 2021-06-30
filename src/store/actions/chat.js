@@ -22,3 +22,17 @@ export const setMessages = (messageData) => {
 		messageData,
 	};
 };
+
+export const joinRoom = (room) => {
+	return {
+		type: actionTypes.JOIN_ROOM,
+		room,
+	};
+};
+
+export const setRooms = (roomData) => {
+	return {
+		type: actionTypes.SET_ROOMS,
+		roomData,
+	};
+};
