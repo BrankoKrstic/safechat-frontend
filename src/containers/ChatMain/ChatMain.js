@@ -7,6 +7,7 @@ import {
 	setUsers,
 	setMessages,
 	joinRoom,
+	setRooms,
 } from "../../store/actions/chat";
 import ContentBox from "../../components/ContentBox/ContentBox";
 import MessageForm from "./MessageForm/MessageForm";
@@ -14,6 +15,7 @@ import ChatBox from "./ChatBox/ChatBox";
 import ChatSidebar from "./ChatSidebar/ChatSidebar";
 import ChatParticipants from "./ChatParticipants/ChatParticipants";
 import ChatRooms from "./ChatRooms/ChatRooms";
+import NewRoomDialog from "../../components/NewRoomDialog/NewRoomDialog";
 import "./ChatMain.css";
 
 export default function ChatMain() {
@@ -67,8 +69,9 @@ export default function ChatMain() {
 				)
 			);
 		});
-		socket.on("chat-data", (connectedSockets) => {
+		socket.on("chat-data", (connectedSockets, activeRooms) => {
 			dispatch(setUsers(connectedSockets));
+			dispatch(setRooms(activeRooms));
 		});
 
 		return () => socket.close();
@@ -84,6 +87,7 @@ export default function ChatMain() {
 	return (
 		<>
 			{userId === null && <Redirect to="/login" />}
+			<NewRoomDialog />
 			<div className="ChatMain">
 				<div className="ChatMain-sidebar">
 					<div className="ChatMain-sidebar-inner">
@@ -96,6 +100,7 @@ export default function ChatMain() {
 							<ChatRooms setRoom={setRoom} />
 						</ChatSidebar>
 					</div>
+					<button className="New-room-button">Add Room</button>
 				</div>
 				<div className="ChatMain-chat">
 					<ContentBox>
