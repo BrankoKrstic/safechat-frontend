@@ -1,6 +1,7 @@
 import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import useToggleState from "../../hooks/useToggleState";
 import { io } from "socket.io-client";
 import {
 	getMessage,
@@ -20,12 +21,14 @@ import "./ChatMain.css";
 
 export default function ChatMain() {
 	const { username, userId } = useSelector((state) => state.login);
-	const { messages, currentRoom } = useSelector((state) => state.chat);
+	const { messages, currentRoom, joinedRooms } = useSelector(
+		(state) => state.chat
+	);
 	const dispatch = useDispatch();
 	const socket = io(process.env.REACT_APP_FRONTEND_ENDPOINT, {
 		query: { userId, username },
 	});
-
+	const [dialogOpen, toggleDialogOpen] = useToggleState(false);
 	const sendMessage = (message) => {
 		if (message === "") return;
 		socket.emit(
@@ -42,10 +45,13 @@ export default function ChatMain() {
 	};
 	const setRoom = (room) => {
 		if (room === userId) return;
-		socket.emit("join-room", room, (message) => {
+		if (joinedRooms.includes(room)) {
 			dispatch(joinRoom(room));
-			dispatch(getMessage("server", "", message));
-		});
+		} else {
+			socket.emit("join-room", room, () => {
+				dispatch(joinRoom(room));
+			});
+		}
 	};
 	useEffect(() => {
 		const messageData = JSON.parse(
@@ -87,7 +93,12 @@ export default function ChatMain() {
 	return (
 		<>
 			{userId === null && <Redirect to="/login" />}
-			<NewRoomDialog />
+			{dialogOpen && (
+				<NewRoomDialog
+					toggleDialogOpen={toggleDialogOpen}
+					setRoom={setRoom}
+				/>
+			)}
 			<div className="ChatMain">
 				<div className="ChatMain-sidebar">
 					<div className="ChatMain-sidebar-inner">
@@ -100,7 +111,12 @@ export default function ChatMain() {
 							<ChatRooms setRoom={setRoom} />
 						</ChatSidebar>
 					</div>
-					<button className="New-room-button">Add Room</button>
+					<button
+						className="New-room-button"
+						onClick={toggleDialogOpen}
+					>
+						Add Room
+					</button>
 				</div>
 				<div className="ChatMain-chat">
 					<ContentBox>

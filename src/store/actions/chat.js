@@ -31,13 +31,6 @@ export const joinRoom = (room) => {
 	};
 };
 
-export const addRoom = (room) => {
-	return {
-		type: actionTypes.ADD_ROOM,
-		room,
-	};
-};
-
 export const setRooms = (roomData) => {
 	return {
 		type: actionTypes.SET_ROOMS,
