@@ -1,8 +1,7 @@
 import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import useToggleState from "../../hooks/useToggleState";
-import { io } from "socket.io-client";
 import {
 	getMessage,
 	setUsers,
@@ -10,6 +9,7 @@ import {
 	joinRoom,
 	setRooms,
 } from "../../store/actions/chat";
+import { io } from "socket.io-client";
 import ContentBox from "../../components/ContentBox/ContentBox";
 import MessageForm from "./MessageForm/MessageForm";
 import ChatBox from "./ChatBox/ChatBox";
@@ -25,24 +25,7 @@ export default function ChatMain() {
 		(state) => state.chat
 	);
 	const dispatch = useDispatch();
-	const socket = io(process.env.REACT_APP_FRONTEND_ENDPOINT, {
-		query: { userId, username },
-	});
 	const [dialogOpen, toggleDialogOpen] = useToggleState(false);
-	const sendMessage = (message) => {
-		if (message === "") return;
-		socket.emit(
-			"send-message",
-			{
-				username,
-				userId,
-				message,
-				room: currentRoom,
-			},
-			currentRoom
-		);
-		dispatch(getMessage(username, userId, message, currentRoom));
-	};
 	const setRoom = (room) => {
 		if (room === userId) return;
 		if (joinedRooms.includes(room)) {
@@ -53,6 +36,13 @@ export default function ChatMain() {
 			});
 		}
 	};
+	const socket = useMemo(
+		() =>
+			io(process.env.REACT_APP_FRONTEND_ENDPOINT, {
+				query: { userId, username },
+			}),
+		[userId, username]
+	);
 	useEffect(() => {
 		const messageData = JSON.parse(
 			window.sessionStorage.getItem("safechat-messages")
@@ -60,7 +50,6 @@ export default function ChatMain() {
 		if (messageData && messageData.messages.length > 0) {
 			dispatch(setMessages(messageData.messages));
 		}
-		socket.connect();
 		socket.on("message", (messageData) => {
 			if (messageData.userId === userId) return;
 			if (messageData.room === userId) {
@@ -90,6 +79,20 @@ export default function ChatMain() {
 			);
 		}
 	}, [messages]);
+	const sendMessage = (message) => {
+		if (message === "") return;
+		socket.emit(
+			"send-message",
+			{
+				username,
+				userId,
+				message,
+				room: currentRoom,
+			},
+			currentRoom
+		);
+		dispatch(getMessage(username, userId, message, currentRoom));
+	};
 	return (
 		<>
 			{userId === null && <Redirect to="/login" />}
