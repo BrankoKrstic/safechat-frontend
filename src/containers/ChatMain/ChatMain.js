@@ -96,12 +96,6 @@ export default function ChatMain() {
 	return (
 		<>
 			{userId === null && <Redirect to="/login" />}
-			{dialogOpen && (
-				<NewRoomDialog
-					toggleDialogOpen={toggleDialogOpen}
-					setRoom={setRoom}
-				/>
-			)}
 			<div className="ChatMain">
 				<div className="ChatMain-sidebar">
 					<div className="ChatMain-sidebar-inner">
@@ -110,7 +104,7 @@ export default function ChatMain() {
 						</ChatSidebar>
 					</div>
 					<div className="ChatMain-sidebar-inner">
-						<ChatSidebar headerText="Chats">
+						<ChatSidebar headerText="Rooms">
 							<ChatRooms setRoom={setRoom} />
 						</ChatSidebar>
 					</div>
@@ -129,6 +123,12 @@ export default function ChatMain() {
 						</div>
 					</ContentBox>
 				</div>
+				{dialogOpen && (
+					<NewRoomDialog
+						toggleDialogOpen={toggleDialogOpen}
+						setRoom={setRoom}
+					/>
+				)}
 			</div>
 		</>
 	);

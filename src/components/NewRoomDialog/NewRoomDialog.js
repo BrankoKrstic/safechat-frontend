@@ -17,7 +17,7 @@ export default function NewRoomDialog(props) {
 	return (
 		<Modal clicked={props.toggleDialogOpen}>
 			<div className="NewRoomDialog" onClick={(e) => e.stopPropagation()}>
-				<h3>Enter Room Name:</h3>
+				<label for="NewRoomInput">Enter Room Name:</label>
 				<form onSubmit={handleSubmit}>
 					<FormInput
 						inputId="NewRoomInput"
