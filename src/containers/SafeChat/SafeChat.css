@@ -6,3 +6,9 @@
 	align-items: center;
 	justify-content: space-between;
 }
+
+@media (min-width: 1024px) {
+	.SafeChat {
+		justify-content: space-around;
+	}
+}
