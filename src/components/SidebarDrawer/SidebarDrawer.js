@@ -11,7 +11,16 @@ export default function SidebarDrawer(props) {
 					drawerOpen ? "SidebarDrawer-open" : "SidebarDrawer-closed"
 				}`}
 			>
-				{props.children}
+				<div
+					className="SidebarDrawer-buttoncontainer"
+					clicked={toggleDrawerOpen}
+				>
+					<button
+						className="SidebarDrawer-backbutton"
+						onClick={toggleDrawerOpen}
+					></button>
+				</div>
+				<div className="SidebarDrawer-inner">{props.children}</div>
 			</div>
 		</>
 	);

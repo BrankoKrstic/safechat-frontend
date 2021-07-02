@@ -26,7 +26,7 @@ export default function ChatMain() {
 	);
 	const dispatch = useDispatch();
 	const [dialogOpen, toggleDialogOpen] = useToggleState(false);
-	const [drawerOpen, toggleDrawerOpen] = useToggleState(true);
+	const [drawerOpen, toggleDrawerOpen] = useToggleState(false);
 	const setRoom = (room) => {
 		if (room === userId) return;
 		if (joinedRooms.includes(room)) {

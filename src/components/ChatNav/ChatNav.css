@@ -21,9 +21,9 @@
 	background-color: transparent;
 	border-bottom: none;
 	border-right: none;
-	border-top: 6px solid white;
-	border-left: 6px solid white;
-	transform: rotate(-45deg);
+	border-top: 6px solid #eee;
+	border-left: 6px solid #eee;
+	transform: rotate(-45deg) skew(3deg, 3deg);
 	margin: auto 1rem;
 	cursor: pointer;
 	transition: all 0.4s ease-in;

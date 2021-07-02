@@ -9,9 +9,38 @@
 	top: 0;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
 	background-color: #0e0e23;
 	transition: all 0.6s ease-in;
+}
+
+.SidebarDrawer-buttoncontainer {
+	height: 10%;
+	display: flex;
+}
+
+.SidebarDrawer-backbutton {
+	height: 2rem;
+	width: 2rem;
+	border: none;
+	background-color: transparent;
+	border-top: 6px solid #eee;
+	border-right: 6px solid #eee;
+	transform: rotate(45deg) skew(-3deg, -3deg);
+	margin: auto 0;
+	cursor: pointer;
+	transition: all 0.4s ease-in;
+}
+
+.SidebarDrawer-inner {
+	height: 90%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.SidebarDrawer-backbutton:hover {
+	transform: rotate(45deg) scale(1.1) skew(-7deg, -7deg);
+	border-color: #4255d4;
 }
 
 @media (min-width: 1024px) {
