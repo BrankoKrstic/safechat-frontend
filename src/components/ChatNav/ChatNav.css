@@ -1,5 +1,6 @@
 .ChatNav {
 	height: 10%;
+	min-height: 5rem;
 	width: 100vw;
 	margin: 0;
 	background-color: #1b2147;

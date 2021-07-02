@@ -13,7 +13,7 @@ export default function SidebarDrawer(props) {
 			>
 				<div
 					className="SidebarDrawer-buttoncontainer"
-					clicked={toggleDrawerOpen}
+					onClick={toggleDrawerOpen}
 				>
 					<button
 						className="SidebarDrawer-backbutton"

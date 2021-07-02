@@ -2,7 +2,6 @@
 	width: 97%;
 	height: 95%;
 	display: flex;
-	justify-content: space-between;
 }
 
 .ChatMain-sidebar-container {
@@ -27,11 +26,12 @@
 
 @media (max-width: 1025px) {
 	.ChatMain {
-		height: 85%;
+		height: 90%;
 		margin-bottom: 1.5rem;
 	}
 	.ChatMain-chat {
 		width: 100%;
+		margin-top: 1rem;
 	}
 	.ChatMain-sidebar-container {
 		display: none;
