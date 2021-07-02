@@ -10,12 +10,10 @@ import {
 	setRooms,
 } from "../../store/actions/chat";
 import { io } from "socket.io-client";
+import Sidebar from "../../components/Sidebar/Sidebar";
 import ContentBox from "../../components/ContentBox/ContentBox";
 import MessageForm from "./MessageForm/MessageForm";
 import ChatBox from "./ChatBox/ChatBox";
-import ChatSidebar from "./ChatSidebar/ChatSidebar";
-import ChatParticipants from "./ChatParticipants/ChatParticipants";
-import ChatRooms from "./ChatRooms/ChatRooms";
 import NewRoomDialog from "../../components/NewRoomDialog/NewRoomDialog";
 import "./ChatMain.css";
 
@@ -98,22 +96,10 @@ export default function ChatMain() {
 			{userId === null && <Redirect to="/login" />}
 			<div className="ChatMain">
 				<div className="ChatMain-sidebar">
-					<div className="ChatMain-sidebar-inner">
-						<ChatSidebar headerText="Participants">
-							<ChatParticipants setRoom={setRoom} />
-						</ChatSidebar>
-					</div>
-					<div className="ChatMain-sidebar-inner">
-						<ChatSidebar headerText="Rooms">
-							<ChatRooms setRoom={setRoom} />
-						</ChatSidebar>
-					</div>
-					<button
-						className="New-room-button"
-						onClick={toggleDialogOpen}
-					>
-						Add Room
-					</button>
+					<Sidebar
+						setRoom={setRoom}
+						toggleDialogOpen={toggleDialogOpen}
+					/>
 				</div>
 				<div className="ChatMain-chat">
 					<ContentBox>
