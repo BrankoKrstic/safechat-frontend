@@ -15,14 +15,14 @@ export default function NewRoomDialog(props) {
 		props.toggleDialogOpen();
 	};
 	return (
-		<Modal clicked={props.toggleDialogOpen}>
+		<Modal showing clicked={props.toggleDialogOpen}>
 			<div className="NewRoomDialog" onClick={(e) => e.stopPropagation()}>
-				<label for="NewRoomInput">Enter Room Name:</label>
+				<label htmlFor="NewRoomInput">Enter Room Name:</label>
 				<form onSubmit={handleSubmit}>
 					<FormInput
 						inputId="NewRoomInput"
 						value={newRoomFormState}
-						placeholder="New Room Name"
+						placeholder="Room Name"
 						onChange={setNewRoomFormState}
 					/>
 					<FormButton text="Create Room" />

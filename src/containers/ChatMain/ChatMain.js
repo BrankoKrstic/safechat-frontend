@@ -11,7 +11,9 @@ import {
 } from "../../store/actions/chat";
 import { io } from "socket.io-client";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import SidebarDrawer from "../../components/SidebarDrawer/SidebarDrawer";
 import ContentBox from "../../components/ContentBox/ContentBox";
+import ChatNav from "../../components/ChatNav/ChatNav";
 import MessageForm from "./MessageForm/MessageForm";
 import ChatBox from "./ChatBox/ChatBox";
 import NewRoomDialog from "../../components/NewRoomDialog/NewRoomDialog";
@@ -24,6 +26,7 @@ export default function ChatMain() {
 	);
 	const dispatch = useDispatch();
 	const [dialogOpen, toggleDialogOpen] = useToggleState(false);
+	const [drawerOpen, toggleDrawerOpen] = useToggleState(true);
 	const setRoom = (room) => {
 		if (room === userId) return;
 		if (joinedRooms.includes(room)) {
@@ -94,8 +97,18 @@ export default function ChatMain() {
 	return (
 		<>
 			{userId === null && <Redirect to="/login" />}
+			<ChatNav navControl={toggleDrawerOpen} />
 			<div className="ChatMain">
-				<div className="ChatMain-sidebar">
+				<SidebarDrawer
+					toggleDrawerOpen={toggleDrawerOpen}
+					drawerOpen={drawerOpen}
+				>
+					<Sidebar
+						setRoom={setRoom}
+						toggleDialogOpen={toggleDialogOpen}
+					/>
+				</SidebarDrawer>
+				<div className="ChatMain-sidebar-container">
 					<Sidebar
 						setRoom={setRoom}
 						toggleDialogOpen={toggleDialogOpen}

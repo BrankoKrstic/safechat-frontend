@@ -18,3 +18,9 @@
 .FormInput:focus {
 	border: 1px solid white;
 }
+
+@media (max-width: 1025px) {
+	.FormInput {
+		font-size: 1.2rem;
+	}
+}
