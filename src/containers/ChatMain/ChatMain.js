@@ -56,14 +56,24 @@ export default function ChatMain() {
 			if (messageData.room === userId) {
 				messageData.room = messageData.userId;
 			}
-			dispatch(
-				getMessage(
-					messageData.username,
-					messageData.userId,
-					messageData.message,
-					messageData.room
-				)
-			);
+			let message = messageData.message;
+			fetch(`/.netlify/functions/decrypt-message?message="${message}"`)
+				.then((res) => res.json())
+				.then((data) => {
+					let decryptedMessage = data.message;
+					decryptedMessage = decryptedMessage.substring(
+						1,
+						decryptedMessage.length - 1
+					);
+					dispatch(
+						getMessage(
+							messageData.username,
+							messageData.userId,
+							decryptedMessage,
+							messageData.room
+						)
+					);
+				});
 		});
 		socket.on("chat-data", (connectedSockets, activeRooms) => {
 			dispatch(setUsers(connectedSockets));
@@ -82,16 +92,22 @@ export default function ChatMain() {
 	}, [messages]);
 	const sendMessage = (message) => {
 		if (message === "") return;
-		socket.emit(
-			"send-message",
-			{
-				username,
-				userId,
-				message,
-				room: currentRoom,
-			},
-			currentRoom
-		);
+		fetch(`/.netlify/functions/encrypt-message?message="${message}"`)
+			.then((res) => res.json())
+			.then((data) => {
+				let encryptedMessage = data.message;
+				socket.emit(
+					"send-message",
+					{
+						username,
+						userId,
+						message: encryptedMessage,
+						room: currentRoom,
+					},
+					currentRoom
+				);
+			});
+
 		dispatch(getMessage(username, userId, message, currentRoom));
 	};
 	return (
