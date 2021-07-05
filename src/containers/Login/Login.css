@@ -28,3 +28,9 @@
 	font-size: 2rem;
 	padding: 1rem;
 }
+
+@media (max-width: 1025px) {
+	.Login-form {
+		width: 70%;
+	}
+}
