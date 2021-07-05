@@ -1,13 +1,16 @@
 import { useSelector } from "react-redux";
 import UserWidget from "../ChatSidebar/UserWidget/UserWidget";
 
+const regexExp =
+	/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
+
 export default function ChatRooms(props) {
 	const { rooms, currentRoom } = useSelector((state) => state.chat);
 	const chats = () => {
 		const chatComponents = [];
 		let i = 1;
 		for (let chat of rooms) {
-			if (chat !== "null")
+			if (chat !== "null" && !regexExp.test(chat))
 				chatComponents.push(
 					<UserWidget
 						key={chat}
