@@ -10,7 +10,17 @@
 	display: flex;
 	flex-direction: column;
 	background-color: #0e0e23;
-	transition: all 0.6s ease-in;
+	animation-name: open;
+	animation-duration: 0.6s;
+}
+
+@keyframes open {
+	0% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: translateX(0);
+	}
 }
 
 .SidebarDrawer-buttoncontainer {
@@ -47,12 +57,4 @@
 	.SidebarDrawer {
 		display: none;
 	}
-}
-
-.SidebarDrawer-open {
-	transform: translateX(0);
-}
-
-.SidebarDrawer-closed {
-	transform: translateX(100%);
 }
