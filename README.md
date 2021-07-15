@@ -6,13 +6,13 @@ It uses React to render a Chat application, featuring a global chat room, the po
 
 A [full demo of the app can be found here](https://awesome-bell-f75efd.netlify.app/main).
 
-CoffeeHub relies on a Socket.io backend powered by npm. The code for it can be found in a [separate repository](https://github.com/BrankoKrstic/safechat-backend).
+SafeChat relies on a Socket.io backend powered by npm. The code for it can be found in a [separate repository](https://github.com/BrankoKrstic/safechat-backend).
 
 ## To install
 
 Clone the github repo to your machine.
 
-Execute `cd coffeehub-frontend` into the terminal to go into the repo folder
+Execute `cd safechat-frontend` into the terminal to go into the repo folder
 
 Execute `npm install` to download all dependencies
 
